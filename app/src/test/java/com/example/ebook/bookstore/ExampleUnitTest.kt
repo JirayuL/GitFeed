@@ -34,5 +34,4 @@ class ExampleUnitTest {
         presenter.start()
         inOrder.verify(repo).addObserver(presenter)
     }
-    
 }
