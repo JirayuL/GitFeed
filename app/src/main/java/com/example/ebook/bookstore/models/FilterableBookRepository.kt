@@ -11,6 +11,6 @@ abstract class FilterableBookRepository : BookRepository() {
     fun filter(keyword: String): List<Book> {
         return bookList.filter({ book: Book ->
             book.title.contains(keyword, true) || book.publicationYear.toString().contains(keyword, true)
-        })
+        }).sortedWith(compareBy(Book::title, Book::publicationYear))
     }
 }
