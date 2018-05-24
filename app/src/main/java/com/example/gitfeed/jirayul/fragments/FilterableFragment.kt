@@ -1,4 +1,4 @@
-package com.example.ebook.bookstore.fragments
+package com.example.gitfeed.jirayul.fragments
 
 import android.content.Context
 import android.os.Bundle
@@ -8,10 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 
-import com.example.ebook.bookstore.R
-import com.example.ebook.bookstore.adapters.TwoLineArrayAdapter
-import com.example.ebook.bookstore.models.Book
-import com.example.ebook.bookstore.presenters.BookView
+import com.example.gitfeed.jirayul.R
+import com.example.gitfeed.jirayul.adapters.TwoLineArrayAdapter
+import com.example.gitfeed.jirayul.jirayul.Repo
+import com.example.gitfeed.jirayul.presenters.GitFeedView
 import kotlinx.android.synthetic.main.fragment_book_list.view.*
 
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,9 +26,9 @@ private const val TAB_NUMBER = "tabNumber"
  * create an instance of this fragment.
  *
  */
-class FilterableFragment : Fragment(), BookView {
+class FilterableFragment : Fragment(), GitFeedView {
 
-    private var bookAdapter: ArrayAdapter<Book>? = null
+    private var repoAdapter: ArrayAdapter<Repo>? = null
     private var tabNumber: Int? = null
     private var listener: OnFragmentInteractionListener? = null
 
@@ -43,8 +43,8 @@ class FilterableFragment : Fragment(), BookView {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val rootView: View = inflater.inflate(R.layout.fragment_book_list, container, false)
-        bookAdapter = TwoLineArrayAdapter(rootView.context, ArrayList())
-        rootView.bookListView.adapter = bookAdapter
+        repoAdapter = TwoLineArrayAdapter(rootView.context, ArrayList())
+        rootView.bookListView.adapter = repoAdapter
         rootView.bookListView.setOnItemClickListener { parent, view, position, id ->
             listener?.onListItemClicked(tabNumber!!, position)
         }
@@ -66,9 +66,9 @@ class FilterableFragment : Fragment(), BookView {
         listener = null
     }
 
-    override fun setBookList(books: List<Book>) {
-        bookAdapter?.clear()
-        bookAdapter?.addAll(books)
+    override fun setBookList(repos: List<Repo>) {
+        repoAdapter?.clear()
+        repoAdapter?.addAll(repos)
     }
 
     /**

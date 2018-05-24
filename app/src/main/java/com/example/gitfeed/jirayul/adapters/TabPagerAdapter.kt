@@ -1,4 +1,4 @@
-package com.example.ebook.bookstore.adapters
+package com.example.gitfeed.jirayul.adapters
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager

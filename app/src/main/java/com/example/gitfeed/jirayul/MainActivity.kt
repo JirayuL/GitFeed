@@ -1,4 +1,4 @@
-package com.example.ebook.bookstore
+package com.example.gitfeed.jirayul
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -6,13 +6,13 @@ import android.support.design.widget.TabLayout
 import android.support.v7.widget.SearchView
 import android.view.Menu
 import android.view.MenuItem
-import com.example.ebook.bookstore.adapters.TabPagerAdapter
-import com.example.ebook.bookstore.fragments.FilterableFragment
+import com.example.gitfeed.jirayul.adapters.TabPagerAdapter
+import com.example.gitfeed.jirayul.fragments.FilterableFragment
 import kotlinx.android.synthetic.main.activity_main.*
-import com.example.ebook.bookstore.models.BookRepository
-import com.example.ebook.bookstore.models.MyBookRepository
-import com.example.ebook.bookstore.models.OnlineBookRepository
-import com.example.ebook.bookstore.presenters.BookPresenter
+import com.example.gitfeed.jirayul.jirayul.RepoRepository
+import com.example.gitfeed.jirayul.jirayul.InterestRepoRepository
+import com.example.gitfeed.jirayul.jirayul.OnlineRepoRepository
+import com.example.gitfeed.jirayul.presenters.GitFeedPresenter
 
 
 class MainActivity : AppCompatActivity(), FilterableFragment.OnFragmentInteractionListener {
@@ -22,13 +22,13 @@ class MainActivity : AppCompatActivity(), FilterableFragment.OnFragmentInteracti
         private val MYBOOK_TAB = 1
     }
 
-    private lateinit var bookListRepository: BookRepository // Model
+    private lateinit var repoListRepository: RepoRepository // Model
     private lateinit var bookListFragment: FilterableFragment // View
-    private lateinit var bookListPresenter: BookPresenter // Presenter
+    private lateinit var gitFeedListPresenter: GitFeedPresenter // Presenter
 
-    private lateinit var myBookRepository: MyBookRepository // Model
+    private lateinit var interestRepoRepository: InterestRepoRepository // Model
     private lateinit var myBookFragment: FilterableFragment // View
-    private lateinit var myBookPresenter: BookPresenter // Presenter
+    private lateinit var myGitFeedPresenter: GitFeedPresenter // Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,15 +40,15 @@ class MainActivity : AppCompatActivity(), FilterableFragment.OnFragmentInteracti
 
     override fun onFragmentCreated(tabNumber: Int) {
         when (tabNumber) {
-            BOOKLIST_TAB -> bookListPresenter.start()
-            MYBOOK_TAB -> myBookPresenter.start()
+            BOOKLIST_TAB -> gitFeedListPresenter.start()
+            MYBOOK_TAB -> myGitFeedPresenter.start()
         }
     }
 
     override fun onListItemClicked(tabNumber: Int, position: Int) {
         when (tabNumber) {
             BOOKLIST_TAB -> {
-                myBookRepository.addBook(bookListRepository.getBooks().get(position))
+                interestRepoRepository.addBook(repoListRepository.getBooks().get(position))
             }
             MYBOOK_TAB -> {
             }
@@ -56,13 +56,13 @@ class MainActivity : AppCompatActivity(), FilterableFragment.OnFragmentInteracti
     }
 
     private fun configureModel() {
-        bookListRepository = OnlineBookRepository() // Model
+        repoListRepository = OnlineRepoRepository() // Model
         bookListFragment = FilterableFragment.newInstance(BOOKLIST_TAB) // View
-        bookListPresenter = BookPresenter(bookListFragment, bookListRepository) // Presenter
+        gitFeedListPresenter = GitFeedPresenter(bookListFragment, repoListRepository) // Presenter
 
-        myBookRepository = MyBookRepository() // Model
+        interestRepoRepository = InterestRepoRepository() // Model
         myBookFragment = FilterableFragment.newInstance(MYBOOK_TAB) // View
-        myBookPresenter = BookPresenter(myBookFragment, myBookRepository) // Presenter
+        myGitFeedPresenter = GitFeedPresenter(myBookFragment, interestRepoRepository) // Presenter
     }
 
     private fun configureTabLayout() {
@@ -98,8 +98,8 @@ class MainActivity : AppCompatActivity(), FilterableFragment.OnFragmentInteracti
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 if (newText != null) {
-                    bookListPresenter.filter(newText)
-                    myBookPresenter.filter(newText)
+                    gitFeedListPresenter.filter(newText)
+                    myGitFeedPresenter.filter(newText)
                 }
                 return false
             }

@@ -1,13 +1,12 @@
-package com.example.ebook.bookstore.presenters
+package com.example.gitfeed.jirayul.presenters
 
-import com.example.ebook.bookstore.models.Book
-import com.example.ebook.bookstore.models.BookRepository
-import com.example.ebook.bookstore.models.FilterableBookRepository
+import com.example.gitfeed.jirayul.jirayul.RepoRepository
+import com.example.gitfeed.jirayul.jirayul.FilterableRepoRepository
 import java.util.*
 
-class BookPresenter(
-        private val view: BookView,
-        private val repository: BookRepository
+class GitFeedPresenter(
+        private val view: GitFeedView,
+        private val repository: RepoRepository
 ) : Observer {
 
     fun start() {
@@ -16,7 +15,7 @@ class BookPresenter(
     }
 
     fun filter(newText: String) {
-        if (repository is FilterableBookRepository) {
+        if (repository is FilterableRepoRepository) {
             view.setBookList(repository.filter(newText))
         }
     }
